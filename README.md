@@ -19,7 +19,7 @@ Detailed explanation can be found at [Call Git Server README](/callGitServer/REA
 
 Creates a package.xml from a JSON.
 
-Detailed explanation can be found at [Geneerate Package README](/generatePackage/README.md).
+Detailed explanation can be found at [Generate Package README](/generatePackage/README.md).
 
 ## Merge Metadata
 
