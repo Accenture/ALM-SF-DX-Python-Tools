@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+
+		<script>
+			function orderchevron(id, index, length_dict) {
+				for (i = 1; i <= length_dict; i++) {
+					var chevronAux = document.getElementById("chevron" + id + i);
+					var type_chevronAux = chevronAux.classList[2];
+					console.log(type_chevronAux);
+					if (type_chevronAux == "glyphicon-chevron-down" && index != i) {
+						chevronAux.classList.remove("glyphicon-chevron-down");
+						chevronAux.classList.add("glyphicon-chevron-up");
+					}
+				}
+			}
+			function transform(id, index, length_dict) {
+				orderchevron(id, index, length_dict);
+				var chevron = document.getElementById("chevron" + id + index);
+				var type = chevron.classList[2];
+				if (type == "glyphicon-chevron-up") {
+					chevron.classList.remove("glyphicon-chevron-up");
+					chevron.classList.add("glyphicon-chevron-down");
+				} else if (type == "glyphicon-chevron-down") {
+					chevron.classList.remove("glyphicon-chevron-down");
+					chevron.classList.add("glyphicon-chevron-up");
+				}
+			}
+
+			function hideShowSection(id){
+				toggleChevron(id);
+				collapseSection(id);
+			}
+
+			function toggleChevron(id){
+				var chevron = document.getElementById("chevron" + id);
+				var type = chevron.classList[2];
+				if (type == "glyphicon-chevron-up") {
+					chevron.classList.remove("glyphicon-chevron-up");
+					chevron.classList.add("glyphicon-chevron-down");
+				} else if (type == "glyphicon-chevron-down") {
+					chevron.classList.remove("glyphicon-chevron-down");
+					chevron.classList.add("glyphicon-chevron-up");
+				}
+			}
+
+			function collapseSection(id){
+				var section = document.getElementById("collapse" + id);
+				if( section.classList.contains( 'collapsing' ) ){
+					section.classList.add("collapse");
+					section.classList.add("in");
+					section.classList.remove("collapsing");
+				}
+				else{
+					section.classList.remove("collapse");
+					section.classList.remove("in");
+					section.classList.add("collapsing");
+				}
+			}
+
+			function collapseAll(mapElements) {
+				for( type in mapElements ){
+					cont = 0;
+					for( folder in mapElements[ type ] ){
+						cont++;
+						var section = document.getElementById("collapse-" + type + '-' + cont)
+						if (section.classList.contains("in")) {
+							section.classList.remove("collapse")
+							section.classList.remove("in")
+							section.classList.add("collapsing");
+							//Set Timer and add section.classList.add("collapse")
+						}
+
+						orderchevron(('-' + type + '-' + folder + '-' ), -1, mapElements);
+					}
+					orderchevron(('-' + type + '-'), -1, cont);
+				}
+			}
+
+			function showHideSection( sectionId ){
+				var section				= document.getElementById( sectionId );
+				var showElementClass	= 'showElement';
+				var hideElementClass	= 'hideElement';
+
+				if( section.classList.contains( showElementClass ) ){
+					section.classList.remove( showElementClass );
+					section.classList.add( hideElementClass );
+				}
+				else{
+					section.classList.remove( hideElementClass );
+					section.classList.add( showElementClass );
+				}
+			}
+		</script>
+		<style>
+			.glyphicon{
+				left: 10px;
+			}
+			.panel-group .panel+.panel {
+				margin-top: -2px;
+			}
+			.panel-default>.panel-heading {
+				color: #333;
+				background-color: #fff;
+				border-color: #eee;
+				box-shadow: 0 0 2px 0 rgba(0,0,0,.14), 0 2px 2px 0 rgba(0,0,0,.12), 0 1px 3px 0 rgba(0,0,0,.2);
+			}
+			.panel-default>.panel-heading:hover {
+				background-color: #eee;
+			}
+			h4.panel-title{
+				font-size: 20px;
+				font-weight: bold;
+			}
+			.SanFrancisco{
+				font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+				text-decoration: none;
+			}
+			span {
+				font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+			}
+
+			div.hideElement{
+				display: none;
+			}
+			div.showElement{
+				display: block;
+			}
+			th.thName{
+				padding-left: 5px;
+				padding-right: 5px;
+				padding-bottom: 3px;
+				padding-top: 3px;
+				width: 35%;
+			}
+			th.thType{
+				padding-right: 5px;
+				padding-bottom: 3px;
+				padding-top: 3px;
+				width: 10%;
+			}
+			th.thLine{
+				padding-right: 5px;
+				padding-bottom: 3px;
+				padding-top: 3px;
+				width: 5%;
+			}
+			th.thMessage{
+				padding-right: 5px;
+				padding-bottom: 3px;
+				padding-top: 3px;
+			}
+			td.tdName{
+				padding-left: 5px;
+				padding-right: 5px;
+				width: 35%;
+			}
+			td.tdType{
+				padding-right: 5px;
+				width: 10%;
+			}
+			td.tdLine{
+				padding-right: 5px;
+				width: 5%;
+			}
+			td.tdMessage{
+				padding-right: 5px;
+			}
+			table{
+				margin-top: 5px;
+				width: 100%;
+			}
+			tr.trHover:hover{
+				background: #e0e0e0;
+			}
+			.sectionClass{
+
+			}
+			.subSectionClass{
+
+			}
+			.classificationClass{
+
+			}
+			h2.sectionHeader{
+				margin-block-end: 0em;
+				margin-block-start: 0px;
+				font-weight: bold;
+				font-size: 18px;
+				color: black;
+				margin-top: 0px;
+				padding: 10px 0px 5px 10px;
+				display: list-item;
+				margin-left: 10px;
+				list-style: circle;
+			}
+			h2.subSectionHeader{
+				margin-block-end: 0em;
+				margin-block-start: 0px;
+				font-weight: bold;
+				font-size: 16px;
+				color: black;
+				margin-top: 0px;
+				padding: 10px 0px 5px 15px;
+				display: list-item;
+				margin-left: 20px;
+				list-style: disc;
+			}
+			h2.classificationHeader{
+				margin-block-end: 0em;
+				margin-block-start: 0px;
+				font-weight: bold;
+				font-size: 16px;
+				color: black;
+				margin-top: 0px;
+				padding: 10px 0px 5px 20px;
+				display: list-item;
+				margin-left: 30px;
+				list-style: square;
+			}
+			h2.sectionHeader:hover{
+				background: #e0e0e0;
+			}
+			h2.subSectionHeader:hover{
+				background: #e0e0e0;
+			}
+			h2.classificationHeader:hover{
+				background: #e0e0e0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h2 class="SanFrancisco">
+				PMD Analysis
+			</h2>
+
+			<br/>
+			
+			<center>
+				<canvas id="alertsSummary-{{level}}" width="800" height="400"></canvas>
+				<script type="text/javascript">
+					var graphData = {
+						'labels' : [
+							{% for level in mapIssuesByLevel|sort() %}
+								"{{level}}",
+							{% endfor %}
+						],
+						'datasets' : [
+							{
+								'data' : [
+									{% for level in mapIssuesByLevel|sort() %}
+										{{mapIssuesByLevel[ level ]}},
+									{% endfor %}
+								]
+							}
+						]
+					};
+					var graphElement = document.getElementById( "alertsSummary-{{level}}" ).getContext( "2d" );
+					new Chart( graphElement ).Bar( graphData, { 
+						scaleOverride: false,
+						scaleSteps: {{maxIssues}},
+						scaleStepWidth: {{stepSize}},
+						scaleStartValue: 0,
+						scaleShowVerticalLines: true,
+						scaleShowGridLines : false,
+						barShowStroke : false,
+						scaleShowLabels: true
+					} );
+				</script>
+			</center>
+
+			<div class="panel-group" id="accordion-main">
+				{% for level, listSections in mapAlerts.items()|sort() %}
+					<div class="panel panel-default">
+						<div class="panel-heading" data-toggle="collapse" data-parent="#accordion-main" 
+								onclick="transform()" href="#level-{{loop.index}}">
+							<h4 class="panel-title">
+								<a class="SanFrancisco" data-toggle="collapse" data-parent="#accordion-main" href="#level-{{loop.index}}">{{level}}</a>
+								<span id="chevron-{{loop.index}}" class="pull-right glyphicon glyphicon-chevron-up"></span>
+							</h4>
+						</div>
+						<div id="level-{{loop.index}}" class="panel-collapse collapse">
+							<div class="panel-body">
+								{% set levelIndex = loop.index %}
+								{% for section in listSections|sort() %}
+									{% if section != defaultSectionKey %}
+										<div class="sectionClass">
+											<div onClick='showHideSection("section-{{levelIndex}}-{{loop.index}}")'>
+												<h2 class='sectionHeader'>{{section}}
+													<span id='chevron-{{levelIndex}}-{{loop.index}}' 
+														class='pull-right glyphicon glyphicon-chevron-up'></span>
+												</h2>
+											</div>
+											<div id="section-{{levelIndex}}-{{loop.index}}" class="hideElement">
+												{% set sectionIndex = loop.index %}
+												{% for subSection in listSections[ section ]|sort() %}
+													{% if subSection != defaultSectionKey %}
+														<div class="subSectionClass">
+															<div onClick='showHideSection("subsection-{{levelIndex}}-{{sectionIndex}}-{{loop.index}}")'>
+																<h2 class='subSectionHeader'>{{subSection}}
+																	<span id='chevron-{{levelIndex}}-{{sectionIndex}}-{{loop.index}}' 
+																		class='pull-right glyphicon glyphicon-chevron-up'></span>
+																</h2>
+															</div>
+															<div id="subsection-{{levelIndex}}-{{sectionIndex}}-{{loop.index}}" class="hideElement">
+																{% set subSectionIndex = loop.index %}
+																{% for classification in listSections[ section ][ subSection ] %}
+																	{% if listSections[ section ][ subSection ]|length == 1 %}
+																		<div class="classificationHeader">
+																			<table>
+																				<thead>
+																					<tr>
+																						<th class="thName">File Name</th>
+																						<th class="thType">Type</th>
+																						<th class="thLine">Line</th>
+																						<th class="thMessage">Message</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+																					{% for alertData in listSections[ section ][ subSection ][ classification ] %}
+																						<tr class="trHover">
+																							<td class="tdName">{{alertData.fileName}}</td>
+																							<td class="tdType">{{alertData.fileType}}</td>
+																							<td class="tdLine">{{alertData.lineNumber}}</td>
+																							<td class="tdMessage">{{alertData.alertMsg}}</td>
+																						</tr>
+																					{% endfor %}
+																				</tbody>
+																			</table>
+																		</div>
+																	{% else %}
+																		<div class="classificationClass">
+																			<div onClick='showHideSection("classification-{{levelIndex}}-{{sectionIndex}}-{{subSectionIndex}}-{{loop.index}}")'>
+																				<h2 class='classificationHeader'>{{classification}}
+																					<span id='chevron-{{levelIndex}}-{{sectionIndex}}-{{subSectionIndex}}-{{loop.index}}' 
+																						class='pull-right glyphicon glyphicon-chevron-up'></span>
+																				</h2>
+																			</div>
+																			<div id="classification-{{levelIndex}}-{{sectionIndex}}-{{subSectionIndex}}-{{loop.index}}" class="hideElement">
+																				<table>
+																					<thead>
+																						<tr>
+																							<th class="thName">File Name</th>
+																							<th class="thType">Type</th>
+																							<th class="thLine">Line</th>
+																							<th class="thMessage">Message</th>
+																						</tr>
+																					</thead>
+																					<tbody>
+																						{% for alertData in listSections[ section ][ subSection ][ classification ] %}
+																							<tr class="trHover">
+																								<td class="tdName">{{alertData.fileName}}</td>
+																								<td class="tdType">{{alertData.fileType}}</td>
+																								<td class="tdLine">{{alertData.lineNumber}}</td>
+																								<td class="tdMessage">{{alertData.alertMsg}}</td>
+																							</tr>
+																						{% endfor %}
+																					</tbody>
+																				</table>
+																			</div>
+																		</div>
+																	{% endif %}
+																{% endfor %}
+															</div>
+														</div>
+													{% else %}
+														{% if listSections[ section ]|length == 1 %}
+															<div class="classificationHeader">
+																<table>
+																	<thead>
+																		<tr>
+																			<th class="thName">File Name</th>
+																			<th class="thType">Type</th>
+																			<th class="thLine">Line</th>
+																			<th class="thMessage">Message</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		{% for alertData in listSections[ section ][ subSection ] %}
+																			<tr class="trHover">
+																				<td class="tdName">{{alertData.fileName}}</td>
+																				<td class="tdType">{{alertData.fileType}}</td>
+																				<td class="tdLine">{{alertData.lineNumber}}</td>
+																				<td class="tdMessage">{{alertData.alertMsg}}</td>
+																			</tr>
+																		{% endfor %}
+																	</tbody>
+																</table>
+															</div>
+														{% else %}
+															<div class="subSectionClass">
+																<div onClick='showHideSection("subsection-{{levelIndex}}-{{sectionIndex}}-{{loop.index}}")'>
+																	<h2 class='subSectionHeader'>{{subSection}}
+																		<span id='chevron-{{levelIndex}}-{{sectionIndex}}-{{loop.index}}' 
+																			class='pull-right glyphicon glyphicon-chevron-up'></span>
+																	</h2>
+																</div>
+																<div id="subsection-{{levelIndex}}-{{sectionIndex}}-{{loop.index}}" class="hideElement">
+																	<table>
+																		<thead>
+																			<tr>
+																				<th class="thName">File Name</th>
+																				<th class="thType">Type</th>
+																				<th class="thLine">Line</th>
+																				<th class="thMessage">Message</th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			{% for alertData in listSections[ section ][ subSection ] %}
+																				<tr class="trHover">
+																					<td class="tdName">{{alertData.fileName}}</td>
+																					<td class="tdType">{{alertData.fileType}}</td>
+																					<td class="tdLine">{{alertData.lineNumber}}</td>
+																					<td class="tdMessage">{{alertData.alertMsg}}</td>
+																				</tr>
+																			{% endfor %}
+																		</tbody>
+																	</table>
+																</div>
+															</div>
+														{% endif %}
+													{% endif %}
+												{% endfor %}
+											</div>
+										</div>
+									{% else %}
+										{% if listSections|length == 1 %}
+											{% for subSection in listSections[ section ] %}
+												<div class="classificationHeader">
+													<table>
+														<thead>
+															<tr>
+																<th class="thName">File Name</th>
+																<th class="thType">Type</th>
+																<th class="thLine">Line</th>
+																<th class="thMessage">Message</th>
+															</tr>
+														</thead>
+														<tbody>
+															{% for alertData in listSections[ section ][ subSection ] %}
+																<tr class="trHover">
+																	<td class="tdName">{{alertData.fileName}}</td>
+																	<td class="tdType">{{alertData.fileType}}</td>
+																	<td class="tdLine">{{alertData.lineNumber}}</td>
+																	<td class="tdMessage">{{alertData.alertMsg}}</td>
+																</tr>
+															{% endfor %}
+														</tbody>
+													</table>
+												</div>
+											{% endfor %}
+										{% else %}
+											<div class="sectionClass">
+												<div onClick='showHideSection("section-{{levelIndex}}-{{loop.index}}")'>
+													<h2 class='sectionHeader'>{{section}}
+														<span id='chevron-{{levelIndex}}-{{loop.index}}' 
+															class='pull-right glyphicon glyphicon-chevron-up'></span>
+													</h2>
+												</div>
+												<div id="section-{{levelIndex}}-{{loop.index}}" class="hideElement">
+													<div class="classificationHeader">
+														<table>
+															<thead>
+																<tr>
+																	<th class="thName">File Name</th>
+																	<th class="thType">Type</th>
+																	<th class="thLine">Line</th>
+																	<th class="thMessage">Message</th>
+																</tr>
+															</thead>
+															<tbody>
+																{% for subSection in listSections[ section ] %}
+																	{% for alertData in listSections[ section ][ subSection ] %}
+																		<tr class="trHover">
+																			<td class="tdName">{{alertData.fileName}}</td>
+																			<td class="tdType">{{alertData.fileType}}</td>
+																			<td class="tdLine">{{alertData.lineNumber}}</td>
+																			<td class="tdMessage">{{alertData.alertMsg}}</td>
+																		</tr>
+																	{% endfor %}
+																{% endfor %}
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										{% endif %}
+									{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</body>
+</html>

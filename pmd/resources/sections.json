@@ -1,0 +1,175 @@
+{
+	"Avoid Soql queries inside loops" : { 
+		"level"				: "Critical",
+		"section"			: "Code Performance" 
+	},
+	"Avoid DML statements inside loops" : { 
+		"level"				: "Critical",
+		"section"			: "Code Performance" 
+	},
+	"Avoid making DML operations in Apex class constructor/init method" : { 
+		"level"				: "Critical",
+		"section"			: "Code Performance" 
+	},
+
+	"Hardcoding Ids is bound to break when changing environments." : { 
+		"level"				: "Critical",
+		"section"			: "Hardcoded Ids" 
+	},
+
+	"Suggest named credentials for authentication" : { 
+		"level"				: "High",
+		"section"			: "Named Credentials" 
+	},
+
+	"Avoid untrusted/unescaped variables in DML query" : { 
+		"level"				: "Medium",
+		"section"			: "Queries", 
+		"subSection"		: "Query Parameters" 
+	},
+
+	"Missing ApexDoc @description" : { 
+		"level"				: "Low",
+		"section"			: "Documentation", 
+		"subSection"		: "Missing Parameters" 
+	},
+	"Missing ApexDoc @return" : { 
+		"level"				: "Low",
+		"section"			: "Documentation", 
+		"subSection"		: "Missing Parameters" 
+	},
+	"Missing ApexDoc comment" : { 
+		"level"				: "Low",
+		"section"			: "Documentation", 
+		"subSection"		: "Missing Parameters" 
+	},
+	"Missing or mismatched ApexDoc @param" : { 
+		"level"				: "Low",
+		"section"			: "Documentation", 
+		"subSection"		: "Invalid Parameters" 
+	},
+	"Unexpected ApexDoc @return" : { 
+		"level"				: "Low",
+		"section"			: "Documentation", 
+		"subSection"		: "Invalid Parameters" 
+	},
+
+	"Use one statement for each line, it enhances code readability." : { 
+		"level"				: "Low",
+		"section"			: "Readability", 
+		"subSection"		: "Code Readability" 
+	},
+	"Avoid empty block statements." : { 
+		"level"				: "Low",
+		"section"			: "Readability", 
+		"subSection"		: "Empty Blocks" 
+	},
+	"Avoid empty if statements" : { 
+		"level"				: "Low",
+		"section"			: "Readability", 
+		"subSection"		: "Empty Blocks" 
+	},
+	"Avoid using for statements without curly braces" : { 
+		"level"				: "Low",
+		"section"			: "Readability", 
+		"subSection"		: "Curly Braces" 
+	},
+	"Avoid using if statements without curly braces" : {
+		"level"				: "Low", 
+		"section"			: "Readability", 
+		"subSection"		: "Curly Braces" 
+	},
+	"Avoid using if...else statements without curly braces" : { 
+		"level"				: "Low",
+		"section"			: "Readability", 
+		"subSection"		: "Curly Braces" 
+	},
+	"Avoid long parameter lists." : { 
+		"level"				: "Low",
+		"section"			: "Readability", 
+		"subSection"		: "Refactoring" 
+	},
+	"Avoid really long classes." : { 
+		"level"				: "Low",
+		"section"			: "Readability", 
+		"subSection"		: "Refactoring" 
+	},
+	"Deeply nested if..then statements are hard to read" : { 
+		"level"				: "Medium",
+		"section"			: "Readability", 
+		"subSection"		: "Refactoring" 
+	},
+	"This class has a bunch of public methods and attributes" : { 
+		"level"				: "Low",
+		"section"			: "Readability", 
+		"subSection"		: "Refactoring" 
+	},
+	"Too many fields" : { 
+		"level"				: "Low",
+		"section"			: "Readability", 
+		"subSection"		: "Refactoring" 
+	},
+
+	"Apex classes should declare a sharing model if DML or SOQL/SOSL is used" : { 
+		"level"				: "High",
+		"section"			: "Sharing" 
+	},
+	"Validate CRUD permission before SOQL/DML operation" : { 
+		"level"				: "Medium",
+		"section"			: "Sharing" 
+	},
+
+	"Apex unit tests should not use @isTest(seeAllData = true)" : { 
+		"level"				: "High",
+		"section"			: "Test" 
+	},
+	"Apex unit tests should System.assert() or assertEquals() or assertNotEquals()" : { 
+		"level"				: "High",
+		"section"			: "Test", 
+		"subSection"		: "Asserts" 
+	},
+	"'System.assert' should have 2 parameters." : { 
+		"level"				: "Medium",
+		"section"			: "Test", 
+		"subSection"		: "Asserts" 
+	},
+	"'System.assertEquals' should have 3 parameters." : { 
+		"level"				: "Medium",
+		"section"			: "Test", 
+		"subSection"		: "Asserts" 
+	},
+	"'System.assertNotEquals' should have 3 parameters." : { 
+		"level"				: "Medium",
+		"section"			: "Test", 
+		"subSection"		: "Asserts" 
+	},
+	
+	"Avoid logic in triggers" : { 
+		"level"				: "Critical",
+		"section"			: "Triggers" 
+	},
+	
+	"Avoid empty catch blocks" : { 
+		"level"				: "High",
+		"section"			: "Try-Catch", 
+		"subSection"		: "Empty Blocks" 
+	},
+	"Avoid empty try or finally blocks" : { 
+		"level"				: "High",
+		"section"			: "Try-Catch", 
+		"subSection"		: "Empty Blocks" 
+	},
+	
+	"Apex classes should safely redirect to a known location" : { 
+		"level"				: "Low",
+		"section"			: "Not Classified" 
+	},
+	"Avoid using global modifier" : { 
+		"level"				: "Low",
+		"section"			: "Not Classified" 
+	},
+	"Calling potentially dangerous method" : { 
+		"level"				: "Low",
+		"section"			: "Not Classified"
+	}
+}

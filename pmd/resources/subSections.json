@@ -1,0 +1,111 @@
+{
+	"doesn't match " : { 
+		"The class name " : { 
+			"level"				: "Medium",
+			"section"			: "Nomenclature", 
+			"subSection"		: "Class" 
+		},
+		"The enum name " : { 
+			"level"				: "Medium",
+			"section"			: "Nomenclature", 
+			"subSection"		: "Enum" 
+		},
+		"The instance method name " : { 
+			"level"				: "Medium",
+			"section"			: "Nomenclature", 
+			"subSection"		: "Instance Method" 
+		},
+		"The static method name " : { 
+			"level"				: "Medium",
+			"section"			: "Nomenclature", 
+			"subSection"		: "Static Method" 
+		},
+		"The test method name " : { 
+			"level"				: "Medium",
+			"section"			: "Nomenclature", 
+			"subSection"		: "Test Method"
+		}
+	},
+	"method should have @IsTest annotation." : { 
+		"method should have " : { 
+			"level"				: "Medium",
+			"section"			: "Test", 
+			"subSection"		: "Test Method" 
+		}
+	},
+
+	"has a Standard Cyclomatic Complexity" : { 
+		"The class " : { 
+			"level"				: "Medium",
+			"section"			: "Readability", 
+			"subSection"		: "Standard Cyclomatic Complexity", 
+			"classification"	: "Class" 
+		},
+		"The constructor " : { 
+			"level"				: "Medium",
+			"section"			: "Readability", 
+			"subSection"		: "Standard Cyclomatic Complexity", 
+			"classification"	: "Constructor" 
+		},
+		"The method " : { 
+			"level"				: "Medium",
+			"section"			: "Readability", 
+			"subSection"		: "Standard Cyclomatic Complexity", 
+			"classification"	: "Method"
+		}
+	},
+
+
+	"has a total cyclomatic complexity of" : { 
+		"The class " : { 
+			"level"				: "Medium",
+			"section"			: "Readability", 
+			"subSection"		: "Total Cyclomatic Complexity", 
+			"classification"	: "Class" 
+		}
+	},
+
+
+	"has a cyclomatic complexity of" : { 
+		"The constructor " : { 
+			"level"				: "Medium",
+			"section"			: "Readability", 
+			"subSection"		: "Cyclomatic Complexity", 
+			"classification"	: "Constructor" 
+		},
+		"The method " : { 
+			"level"				: "Medium",
+			"section"			: "Readability", 
+			"subSection"		: "Cyclomatic Complexity", 
+			"classification"	: "Method" 
+		},
+		"The trigger " : { 
+			"level"				: "Medium",
+			"section"			: "Readability", 
+			"subSection"		: "Cyclomatic Complexity", 
+			"classification"	: "Trigger"
+		}
+	},
+
+
+	"has an NCSS line count of" : { 
+		"The constructor " : { 
+			"level"				: "Medium",
+			"section"			: "Readability", 
+			"subSection"		: "NNCS Line Count", 
+			"classification"	: "Constructor" 
+		},
+		"The method " : { 
+			"level"				: "Medium",
+			"section"			: "Readability", 
+			"subSection"		: "NNCS Line Count", 
+			"classification"	: "Method"
+		},
+		"The type " : { 
+			"level"				: "Medium",
+			"section"			: "Readability", 
+			"subSection"		: "NNCS Line Count", 
+			"classification"	: "Method"
+		}
+	}
+}
