@@ -15,6 +15,8 @@ XMLNS_DEF               = 'http://soap.sforce.com/2006/04/metadata'
 XMLNS                   = f'{{{XMLNS_DEF}}}'
 IDENTATION              = '    '
 
+PARSEABLE_METADATA = [ 'labels', 'profiles' ]
+
 INFO_TAG        = '[INFO]'
 ERROR_TAG       = '[ERROR]'
 WARNING_TAG     = '[WARNING]'

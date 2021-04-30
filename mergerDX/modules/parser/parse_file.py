@@ -8,6 +8,7 @@ def parseFile(filename, reference):
 
 	fileString	= get_file( filename, reference )
 	xmlData		= elTree.fromstring( fileString )
+	rootTag		= xmlData.tag.split( XMLNS )[ 1 ]
 
 	mapComponents = {}
 
@@ -17,7 +18,7 @@ def parseFile(filename, reference):
 			addValueToMap( tagName, childElement, mapComponents )
 		else:
 			mapComponents[ tagName ] = childElement.text
-	return mapComponents
+	return rootTag, mapComponents
 
 
 def addValueToMap(tagName, childElement, mapComponents, fullName=None):
