@@ -33,7 +33,10 @@ def handleModifiedFile(srcPath, srcRetrievedPath, folder, fileName):
 def generateFile(srcPath, folder, fileName, mapComponents, mapAttributes, fileTag):
 	xmlFile = '<?xml version="1.0" encoding="UTF-8"?>\n'
 	xmlFile += f'<{fileTag} xmlns="{XMLNS_DEF}">\n'
-	xmlFile += addValuesToFile( mapComponents, mapAttributes )
+	if 'recordTypes' == folder:
+		xmlFile += addRecordTypeValuesToFile( mapComponents, mapAttributes )
+	else:
+		xmlFile += addValuesToFile( mapComponents, mapAttributes )
 	xmlFile += f'</{fileTag}>\n'
 	with open( f'{srcPath}/{folder}/{fileName}', 'w', encoding='utf-8' ) as fileToWrite:
 		fileToWrite.write( xmlFile )
@@ -51,9 +54,32 @@ def addValuesToFile(mapComponents, mapAttributes):
 	return printValue
 
 
+def addRecordTypeValuesToFile(mapComponents, mapAttributes):
+	listComponents	= sorted( list( mapComponents.keys() ) + list( mapAttributes.keys() ) )
+	printValue		= ''
+	
+	setComponents	= set( listComponents )
+	setComponents.remove( 'fullName' )
+	listComponents	= [ 'fullName' ] + sorted( setComponents )
+
+	for componentType in listComponents:
+		if componentType in mapAttributes:
+			printValue += getValueFromAttributes( componentType, mapAttributes )
+		else:
+			printValue += getValueFromComponent( componentType, mapComponents )
+	return printValue
+
+
 def getValueFromAttributes(componentType, mapAttributes):
+	attributeValue = ''
 	componentValue = mapAttributes[ componentType ]
-	return f'{IDENTATION}<{componentType}>{componentValue}</{componentType}>\n'
+
+	if componentValue:
+		attributeValue = f'{IDENTATION}<{componentType}>{xmlEncodeText(componentValue)}</{componentType}>\n'
+	else:
+		attributeValue = f'{IDENTATION}<{componentType}/>\n'
+
+	return attributeValue
 
 
 def getValueFromComponent(componentType, mapComponents):

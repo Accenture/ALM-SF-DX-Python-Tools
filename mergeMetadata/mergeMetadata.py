@@ -43,13 +43,17 @@ def readDescribe(pathDescribe, setParseableObjects):
 def copyFiles(srcPath, srcRetrievedPath, folder, fileName):
     pathSrcRetrieved    = f'{srcRetrievedPath}/{folder}/{fileName}'
     pathSrcFolder       = f'{srcPath}/{folder}'
-    
+
     if os.path.isdir( pathSrcRetrieved ):
         pathSrcSubFolder = f'{pathSrcFolder}/{fileName}'
         checkFolder( pathSrcFolder )
         checkFolder( pathSrcSubFolder )
-        for file in os.listdir( pathSrcRetrieved ):
-            copyFiles( srcPath, srcRetrievedPath, f'{folder}/{fileName}', file )
+        if fileName != 'recordTypes':
+            for file in os.listdir( pathSrcRetrieved ):
+                copyFiles( srcPath, srcRetrievedPath, f'{folder}/{fileName}', file )
+        else:
+            for file in os.listdir( pathSrcRetrieved ):
+                mergeFile( f'{srcPath}/{folder}', f'{srcRetrievedPath}/{folder}', fileName, file )
     else:
         checkFolder( pathSrcFolder )
         shutil.copy( f'{pathSrcRetrieved}', f'{pathSrcFolder}/{fileName}' )
