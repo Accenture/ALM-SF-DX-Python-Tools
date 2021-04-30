@@ -66,7 +66,11 @@ def getDifferences(sourceFolder, source, target):
     diffCommand     = f'git diff --name-status {target} {source}'
     output, _       = call_subprocess( diffCommand)
 
+    if sourceFolder:
     regexString     = r'([A-Z0-9]+)\t*({}\/.+)'.format( sourceFolder )
+    else:
+        regexString = r'([A-Z0-9])\t+(.+\/.+)'
+
     differences     = re.findall( regexString, output )
 
     if not differences:
@@ -267,7 +271,11 @@ def makeDirs( dirPath ):
 
 def splitFolderApiname(sourceFolder, filename):
 
+    if sourceFolder:
     filenameSplit   = filename[ len( sourceFolder ) + 1: ].split( '/' )
+    else:
+        filenameSplit = filename.split( '/' )
+
     folder          = filenameSplit[ 3 ]
     apiname         = '/'.join( filenameSplit[ 4: ] )
     srcFolder       = '/'.join( filenameSplit[ :3 ] )
