@@ -43,7 +43,10 @@ class NoDifferencesException(MergerException):
     ERROR_CODE = 4
 
     def __init__(self, folder):
-        super().__init__(f'No changes detected in the \'{folder}\' folder')
+        if folder:
+            super().__init__(f'No changes detected in the \'{folder}\' folder')
+        else:
+            super().__init__(f'No changes detected in the source folder')
 
 
 class NotControlledFolder(MergerException):
