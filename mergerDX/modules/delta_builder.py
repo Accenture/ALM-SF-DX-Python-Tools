@@ -7,7 +7,7 @@ import shutil
 
 from modules.git import checkout, fetch, prepare_and_merge
 from modules.parser.parse_file import parseFile
-from modules.utils import INFO_TAG, call_subprocess, getXmlNamesFromJSON, IDENTATION
+from modules.utils import INFO_TAG, call_subprocess, getXmlNamesFromJSON, IDENTATION, PARSEABLE_METADATA
 from modules.utils.exceptions import NoDifferencesException
 
 def mergeDelta( source, target, remote, doFetch, reset, deltaFolder, sourceFolder, apiVersion, describePath='describe.log'):
@@ -154,12 +154,12 @@ def handleCreation(srcFolder, folder, apiname, deltaFolder, hasMetaFile, mapDiff
 
 def handleModification(srcFolder, folder, apiname, filename, deltaFolder, sourceRef, targetRef, hasMetaFile, listChildObjects, mapDiffs):
 
-    if folder == 'profiles':
-        print( filename )
-        mapComponentsNew = parseFile( f'{filename}', sourceRef )
-        mapComponentsOld = parseFile( f'{filename}', targetRef )
+    if folder in PARSEABLE_METADATA:
+        print( f'parse file - {filename}')
+        rootTag, mapComponentsNew = parseFile( f'{filename}', sourceRef )
+        rootTag, mapComponentsOld = parseFile( f'{filename}', targetRef )
         mapResult = compareFiles( mapComponentsNew, mapComponentsOld )
-        generateMergedFile( folder, apiname, deltaFolder, mapResult )
+        generateMergedFile( rootTag, folder, apiname, deltaFolder, mapResult )
     else:
         copyFiles( srcFolder, folder, apiname, deltaFolder, hasMetaFile )
 
@@ -170,42 +170,64 @@ def compareFiles(mapComponentsNew, mapComponentsOld):
     for sectionKey in mapComponentsNew:
         if sectionKey in mapComponentsOld:
             if mapComponentsNew[ sectionKey ] != mapComponentsOld[ sectionKey ]:
-                for elementName in mapComponentsNew[ sectionKey ]:
-                    if elementName in mapComponentsOld[ sectionKey ]:
-                        if mapComponentsNew[ sectionKey ][ elementName ] != mapComponentsOld[ sectionKey ][ elementName ]:
+                if isinstance( mapComponentsNew[ sectionKey ], str ):
+                    mapResult[ sectionKey ] = mapComponentsNew[ sectionKey ]
+                else:
+                    for elementName in mapComponentsNew[ sectionKey ]:
+                        if elementName in mapComponentsOld[ sectionKey ]:
+                            if mapComponentsNew[ sectionKey ][ elementName ] != mapComponentsOld[ sectionKey ][ elementName ]:
+                                if not sectionKey in mapResult:
+                                    mapResult[ sectionKey ] = {}
+                                if not elementName in mapResult[ sectionKey ]:
+                                    mapResult[ sectionKey ][ elementName ] = {}
+                                mapResult[ sectionKey ][ elementName ] = mapComponentsNew[ sectionKey ][ elementName ]
+                        else:
                             if not sectionKey in mapResult:
                                 mapResult[ sectionKey ] = {}
                             if not elementName in mapResult[ sectionKey ]:
                                 mapResult[ sectionKey ][ elementName ] = {}
                             mapResult[ sectionKey ][ elementName ] = mapComponentsNew[ sectionKey ][ elementName ]
-                    else:
-                        if not sectionKey in mapResult:
-                            mapResult[ sectionKey ] = {}
-                        if not elementName in mapResult[ sectionKey ]:
-                            mapResult[ sectionKey ][ elementName ] = {}
-                        mapResult[ sectionKey ][ elementName ] = mapComponentsNew[ sectionKey ][ elementName ]
         else:
             mapResult[ sectionKey ] = mapComponentsNew[ sectionKey ]
 
     return mapResult
 
 
-def generateMergedFile(folder, apiname, deltaFolder, mapResult):
+def generateMergedFile(rootTag, folder, apiname, deltaFolder, mapResult):
 
     mergedFile = '<?xml version="1.0" encoding="UTF-8"?>\n'
-    mergedFile += '<Profile xmlns="http://soap.sforce.com/2006/04/metadata">\n'
+    mergedFile += f'<{rootTag} xmlns="http://soap.sforce.com/2006/04/metadata">\n'
     for sectionKey in mapResult:
-        for fullNameElement in mapResult[ sectionKey ]:
-            mergedFile += f'{IDENTATION}<{sectionKey}>\n'
-            for elementTag in mapResult[ sectionKey ][ fullNameElement ]:
-                textValue = mapResult[ sectionKey ][ fullNameElement ][ elementTag ]
-                mergedFile += f'{IDENTATION}{IDENTATION}<{elementTag}>{textValue}</{elementTag}>\n'
-            mergedFile += f'{IDENTATION}</{sectionKey}>\n'
-    mergedFile += '</Profile>'
+        if isinstance( mapResult[ sectionKey ], str ):
+            mergedFile += f'{IDENTATION}<{sectionKey}>{mapResult[ sectionKey ]}</{sectionKey}>\n'
+        else:
+            for fullNameElement in mapResult[ sectionKey ]:
+                mergedFile += f'{IDENTATION}<{sectionKey}>\n'
+                for elementTag in mapResult[ sectionKey ][ fullNameElement ]:
+                    elementValue = mapResult[ sectionKey ][ fullNameElement ][ elementTag ]
+                    mergedFile += iterateElement( elementValue, elementTag, 2 )
+                mergedFile += f'{IDENTATION}</{sectionKey}>\n'
+    mergedFile += f'</{rootTag}>'
 
     makeDirs( f'{deltaFolder}/{folder}' )
     with open( f'{deltaFolder}/{folder}/{apiname}', 'w', encoding='utf-8' ) as resultFile:
         resultFile.write( mergedFile )
+
+
+def iterateElement( elementValue, elementTag, identationLevel,  ):
+
+    textValue = ''
+    if type( elementValue ) is str:
+        textValue += f'{IDENTATION*identationLevel}<{elementTag}>{elementValue}</{elementTag}>\n'
+    elif type( elementValue ) is dict:
+        textValue += f'{IDENTATION*identationLevel}<{elementTag}>\n'
+        for keyTag in sorted( elementValue.keys() ):
+            textValue += iterateElement( elementValue[ keyTag ], keyTag, identationLevel + 1 )
+        textValue += f'{IDENTATION*identationLevel}</{elementTag}>\n'
+    else:
+        textValue += f'{IDENTATION*identationLevel}<{elementTag}/>\n'
+    return textValue
+
 
 def handleDeletion(srcFolder, folder, apiname):
     pass

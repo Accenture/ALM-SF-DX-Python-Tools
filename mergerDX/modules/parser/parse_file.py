@@ -2,12 +2,13 @@ import xml.etree.ElementTree as elTree
 
 from modules.git.utils import get_file
 from modules.utils import XMLNS
-from modules.utils.utilities import getFullName
+from modules.utils.utilities import getFullName, MAP_COMPOSED_FULLNAME, MAP_FULLNAME
 
 def parseFile(filename, reference):
 
 	fileString	= get_file( filename, reference )
 	xmlData		= elTree.fromstring( fileString )
+	rootTag		= xmlData.tag.split( XMLNS )[ 1 ]
 
 	mapComponents = {}
 
@@ -17,7 +18,7 @@ def parseFile(filename, reference):
 			addValueToMap( tagName, childElement, mapComponents )
 		else:
 			mapComponents[ tagName ] = childElement.text
-	return mapComponents
+	return rootTag, mapComponents
 
 
 def addValueToMap(tagName, childElement, mapComponents, fullName=None):
