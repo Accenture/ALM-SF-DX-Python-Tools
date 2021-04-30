@@ -2,7 +2,7 @@ import xml.etree.ElementTree as elTree
 
 from modules.git.utils import get_file
 from modules.utils import XMLNS
-from modules.utils.utilities import getFullName, MAP_COMPOSED_FULLNAME, MAP_FULLNAME
+from modules.utils.utilities import getFullName
 
 def parseFile(filename, reference):
 
