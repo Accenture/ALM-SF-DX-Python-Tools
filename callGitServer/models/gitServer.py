@@ -3,6 +3,7 @@ from models.httpResponse import HttpResponse
 from models.gitlabHandler import GitlabHandler
 from models.bitbucketCloud import BitbucketCloud
 from models.bitbucketServer import BitbucketServer
+from models.azureDevOpsHandler import AzureDevOpsHandler
 from models.exceptions import DuplicateRemote
 from modules.utils import ( INFO_TAG, WARNING_TAG, print_key_value_list, call_subprocess )
 
@@ -19,6 +20,8 @@ class GitServer():
 			self.gitHandler = BitbucketCloud( host, kwargs[ 'owner' ], kwargs[ 'projectName' ] )
 		elif 'gitlab' in host:
 			self.gitHandler = GitlabHandler( host, kwargs[ 'projectId' ] )
+		elif 'dev.azure.com' in host:
+			self.gitHandler = AzureDevOpsHandler( host, kwargs[ 'owner' ], kwargs[ 'projectName' ], kwargs[ 'repositoryId' ] )
 		else:
 			if kwargs[ 'isBitbucketServer' ]:
 				self.gitHandler = BitbucketServer( host, kwargs[ 'owner' ], kwargs[ 'projectName' ] )

@@ -100,10 +100,13 @@ def comment_parser(parser):
     parser.add_argument( '-t', '--token', required=True, help='Git API Token (required)' )
     parser.add_argument( '-ns', '--no-ssl', action='store_false', dest='ssl_verify', help='Flag to verify the SSL in requests' )
     parser.add_argument( '-fh', '--force-https', action='store_true', help='Flag to force https Git host' )
-    parser.add_argument( '-p', '--project', required=True, help='Project Id (Gitlab) or Project Name (Bitbucket) identifier' )
-    parser.add_argument( '-o', '--owner', help='Owner (Bitbucket) identifier' )
+    parser.add_argument( '-p', '--project', required=True, help='Project Id (Gitlab) or Project Name (Bitbucket/Azure DevOps) identifier' )
+    parser.add_argument( '-o', '--owner', help='Owner (Bitbucket) identifier or Organization (Azure DevOps)' )
     parser.add_argument( '-r', '--host', required=True, help='Repository host' )
     parser.add_argument( '-bs', '--bitbucketServer', type=checkBoolean, default=False, help='Flag to use Bitbucket Server' )
+    parser.add_argument( '-ri', '--repositoryId', help='Repository for Azure DevOps' )
+    parser.add_argument( '-ti', '--threadId', help='Thread Id for Azure DevOps' )
+    parser.add_argument( '-ts', '--threadStatus', help='Thread status for Azure DevOps' )
 
 
 def status_parser(parser):
