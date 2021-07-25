@@ -40,6 +40,7 @@ class AzureDevOpsHandler():
 		if response.statusCode == 200:
 			commentId = response.responseBody[ 'id' ]
 			print( f'Thread created succesfully with id \'{commentId}\'' )
+			print( f'##vso[task.setvariable variable=pr_threat_id]{commentId}' )
 		else:
 			print( f'Could not create threat on pull request {pullRequestId} ({response.responseBody} -- {response.statusCode})' )
 
