@@ -36,7 +36,6 @@ class AzureDevOpsHandler():
 		] )
 
 		response = http_request( url, data, headers, 'POST', sslVerify )
-		print( response )
 
 		if response.statusCode == 200:
 			commentId = response.responseBody[ 'id' ]
