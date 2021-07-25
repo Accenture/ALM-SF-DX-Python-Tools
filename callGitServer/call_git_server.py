@@ -19,11 +19,14 @@ def handle_options( args ):
         if args.edit:
             edit_comment( args.host, args.token, args.merge_request_iid, args.message,
                              args.build_id, args.workspace, args.ssl_verify, projectId=args.project, 
-                             owner=args.owner, projectName=args.project, isBitbucketServer=args.bitbucketServer )
+                             owner=args.owner, projectName=args.project, repositoryId=args.repositoryId, 
+                             threadId=args.threadId, threadStatus=args.threadStatus, 
+                             isBitbucketServer=args.bitbucketServer )
         else:
             add_comment( args.host, args.token, args.merge_request_iid, args.message,
                              args.build_id, args.workspace, args.ssl_verify, projectId=args.project, 
-                             owner=args.owner, projectName=args.project, isBitbucketServer=args.bitbucketServer )
+                             owner=args.owner, projectName=args.project, repositoryId=args.repositoryId, 
+                             isBitbucketServer=args.bitbucketServer )
     elif args.option == 'status':
         update_commit_status( args.host, args.token, args.commit, args.status, args.build_url,
                                 args.ssl_verify, projectId=args.project, projectName=args.project, 
