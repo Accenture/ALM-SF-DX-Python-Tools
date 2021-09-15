@@ -69,7 +69,7 @@ def getDifferences(sourceFolder, source, target):
     if sourceFolder:
         regexString = r'([A-Z0-9]+)\t*({}\/.+)'.format( sourceFolder )
     else:
-        regexString = r'([A-Z0-9])\t+(.+\/.+)'
+        regexString = r'([A-Z0-9]+)\t*(.+\/.+)'
 
     differences = re.findall( regexString, output )
 
