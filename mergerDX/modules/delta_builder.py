@@ -246,8 +246,10 @@ def copyFiles(srcFolder, folder, apiname, deltaFolder, hasMetaFile):
             copyTree( f'{srcFolder}/{pathFolder}', f'{deltaFolder}/{pathFolder}' )
             copyFile( f'{srcFolder}/{pathFolder}.resource-meta.xml', f'{deltaFolder}/{pathFolder}.resource-meta.xml' )
         else:
+            makeDirs( f'{deltaFolder}/{folder}' )
             copyFile( f'{srcFolder}/{folder}/{apiname}', f'{deltaFolder}/{folder}/{apiname}' )
-            copyFile( f'{srcFolder}/{folder}/{apiname}-meta.xml', f'{deltaFolder}/{folder}/{apiname}-meta.xml' )
+            apiname = apiname.split( '.' )[ 0 ]
+            copyFile( f'{srcFolder}/{folder}/{apiname}.resource-meta.xml', f'{deltaFolder}/{folder}/{apiname}.resource-meta.xml' )
     else:
         if '/' in apiname:
             subFolders      = apiname.split( '/' )
