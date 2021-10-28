@@ -56,5 +56,5 @@ def buildParser(subparser):
     subparser.add_argument( '-a', '--api-version', required=True, type=float, help=f'API Version for delta generation' )
     subparser.add_argument( '-nf', '--no-fetch', default=True, action='store_false', dest='fetch', help='Flag to select if it is necessary to fetch before checkout' )
     subparser.add_argument( '-nr', '--no-reset', default=True, action='store_false', dest='reset', help='Flag to select if it is necessary to hard reset the branches before merge' )
-    subparser.add_argument( '-sf', '--source-folder', required=True, help=f'Source folder name' )
+    subparser.add_argument( '-sf', '--source-folder', help=f'Source folder name' )
     subparser.add_argument( '-dsc', '--describe', default='describe.log', help='Path to describe log file' )
