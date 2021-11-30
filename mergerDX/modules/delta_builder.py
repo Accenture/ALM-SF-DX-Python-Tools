@@ -159,7 +159,8 @@ def handleModification(srcFolder, folder, apiname, filename, deltaFolder, source
         rootTag, mapComponentsNew = parseFile( f'{filename}', sourceRef )
         rootTag, mapComponentsOld = parseFile( f'{filename}', targetRef )
         mapResult = compareFiles( mapComponentsNew, mapComponentsOld )
-        generateMergedFile( rootTag, folder, apiname, deltaFolder, mapResult )
+        if mapResult.keys():
+	        generateMergedFile( rootTag, folder, apiname, deltaFolder, mapResult )
     else:
         copyFiles( srcFolder, folder, apiname, deltaFolder, hasMetaFile )
 
