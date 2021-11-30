@@ -3,6 +3,7 @@ import xml.etree.ElementTree as elTree
 from modules.git.utils import get_file
 from modules.utils import XMLNS
 from modules.utils.utilities import getFullName
+from modules.utils.exceptions import DuplicatedTags
 
 def parseFile(filename, reference):
 
@@ -10,22 +11,30 @@ def parseFile(filename, reference):
 	xmlData		= elTree.fromstring( fileString )
 	rootTag		= xmlData.tag.split( XMLNS )[ 1 ]
 
+	setDuplicatedFullNames = set()
 	mapComponents = {}
 
 	for childElement in xmlData.getchildren():
 		tagName = childElement.tag.split( XMLNS )[ 1 ]
 		if childElement:
-			addValueToMap( tagName, childElement, mapComponents )
+			addValueToMap( tagName, childElement, mapComponents, setDuplicatedFullNames )
 		else:
 			mapComponents[ tagName ] = childElement.text
+
+	if len( setDuplicatedFullNames ) > 0:
+		print( f'##[error] Duplicated Tags found in file {filename}' )
+		print( setDuplicatedFullNames )
+		raise DuplicatedTags( f'Duplicated Tags found in file {filename}' )
 	return rootTag, mapComponents
 
 
-def addValueToMap(tagName, childElement, mapComponents, fullName=None):
+def addValueToMap(tagName, childElement, mapComponents, setDuplicatedFullNames, fullName=None):
 	if not fullName:
 		fullName = getFullName( tagName, childElement )
 	if not tagName in mapComponents:
 		mapComponents[ tagName ] = {}
+	if fullName in mapComponents[ tagName ]:
+		setDuplicatedFullNames.add( f'{tagName}-{fullName}' )
 	mapComponents[ tagName ][ fullName ] = getChildData( childElement )
 
 
