@@ -250,6 +250,8 @@ class NoFullNameError(MergerException):
 
 
 class DuplicatedTags(MergerException):
+    ''' Exception raised when duplicated tags are found '''
+    ERROR_CODE = 113
 
-    def __init__(self, tagName):
-        super().__init__( f'No tag found for {tagName}' )
+    def __init__(self, filename):
+        super().__init__( f'Duplicated Tags found in file {filename}' )

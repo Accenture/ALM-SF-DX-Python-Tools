@@ -24,7 +24,7 @@ def parseFile(filename, reference):
 	if len( setDuplicatedFullNames ) > 0:
 		print( f'##[error] Duplicated Tags found in file {filename}' )
 		print( setDuplicatedFullNames )
-		raise DuplicatedTags( f'Duplicated Tags found in file {filename}' )
+		raise DuplicatedTags( filename )
 	return rootTag, mapComponents
 
 
