@@ -276,8 +276,7 @@ def copyFiles(srcFolder, folder, apiname, deltaFolder, hasMetaFile):
                 if 'document-meta.xml' in apiname:
                     rootFilename    = apiname[ : -len( 'document-meta.xml' ) ]
                     listFiles       = glob.glob( f'{srcFolder}/{folder}/{rootFilename}*' )
-                    pathFile        = [ file for file in listFiles if 'document-meta.xml' not in file ][ 0 ].split( '/' )
-                    relatedFile     = pathFile[ len( pathFile ) - 1 ]
+                    relatedFile     = [ file for file in listFiles if 'document-meta.xml' not in file ][ 0 ].split( '/documents/' )[ 1 ]
                 else:
                     relatedFile = apiname.split( '.' )[ 0 ]
                     relatedFile = f'{relatedFile}.document-meta.xml'
