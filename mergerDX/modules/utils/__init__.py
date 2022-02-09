@@ -11,11 +11,14 @@ import __main__
 from modules.utils.exceptions import NotCreatedDescribeLog
 from modules.utils.models import MetadataType
 
-XMLNS_DEF               = 'http://soap.sforce.com/2006/04/metadata'
-XMLNS                   = f'{{{XMLNS_DEF}}}'
-IDENTATION              = '    '
+XMLNS_DEF  = 'http://soap.sforce.com/2006/04/metadata'
+XMLNS      = f'{{{XMLNS_DEF}}}'
+IDENTATION = '    '
 
-PARSEABLE_METADATA = [ 'labels', 'profiles' ]
+PARSEABLE_METADATA = [
+	'labels', 'profiles', 'assignmentRules', 'autoResponseRules', 'escalationRules',
+	'matchingRules', 'managedTopics', 'sharingRules', 'workflows'
+]
 
 INFO_TAG        = '[INFO]'
 ERROR_TAG       = '[ERROR]'
@@ -82,7 +85,7 @@ def getXmlNames(filepath):
 
     if not os.path.isfile( filepath ):
         raise NotCreatedDescribeLog( filepath )
-    
+
     with open( filepath, 'r' ) as filepath:
         lines = filepath.read()
 
@@ -110,7 +113,7 @@ def getXmlNamesFromJSON(filepath):
 
     if not os.path.isfile( filepath ):
         raise NotCreatedDescribeLog( filepath )
-    
+
     with open( filepath, 'r' ) as file:
         data = json.load( file )
 
