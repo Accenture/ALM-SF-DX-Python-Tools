@@ -24,7 +24,7 @@ class AzureDevOpsHandler():
 		token = base64.b64encode( bytes( f':{token}', 'utf-8' ) ).decode( 'ascii' )
 		commentBody = commentBody[ 0 ]
 
-		threadStatus = kwargs[ 'threadStatus' ] if 'threadStatus' in kwargs else 1
+		threadStatus = kwargs[ 'threadStatus' ] if ( 'threadStatus' in kwargs and kwargs[ 'threadStatus' ] ) else 1
 
 		url		= f'{self.host}/{self.organization}/{self.projectName}/_apis/git/repositories/{self.repositoryId}/pullRequests/{pullRequestId}/threads?api-version=6.0'
 		payload	= { 'comments': [ { 'parentCommentId': 0, 'content': commentBody, 'commentType': 1 } ], 'status' : threadStatus }
