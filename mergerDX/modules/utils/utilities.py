@@ -74,11 +74,11 @@ def getComposedName( tagName, childElement ):
 
 
 def xmlEncodeText( textValue ):
-    textValue = textValue.replace( "&", "&amp;" );
-    textValue = textValue.replace( "<", "&lt;" );
-    textValue = textValue.replace( ">", "&gt;" );
-    textValue = textValue.replace( "\"", "&quot;" );
-    textValue = textValue.replace( "'", "&apos;" );
+    textValue = textValue.replace( "&", "&amp;" )
+    textValue = textValue.replace( "<", "&lt;" )
+    textValue = textValue.replace( ">", "&gt;" )
+    textValue = textValue.replace( "\"", "&quot;" )
+    textValue = textValue.replace( "'", "&apos;" )
     return textValue
 
 
