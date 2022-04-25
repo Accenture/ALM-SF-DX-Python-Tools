@@ -43,7 +43,15 @@ def getChildData(xmlElement):
 	for childElement in xmlElement.getchildren():
 		tagName = childElement.tag.split( XMLNS )[ 1 ]
 		if childElement:
-			mapData[ tagName ] = getChildData( childElement )
+			if not tagName in mapData:
+				mapData[ tagName ] = getChildData( childElement )
+			else:
+				if not isinstance( mapData[ tagName], list):
+					oldTagNameMap = mapData[ tagName ]
+					mapData[ tagName ] = list()
+					mapData[ tagName ].append( oldTagNameMap )
+
+				mapData[ tagName ].append( getChildData( childElement ) )
 		else:
 			mapData[ tagName ] = childElement.text
 	return mapData

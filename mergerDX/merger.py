@@ -46,9 +46,11 @@ def main():
 
     except MergerExceptionWarning as exception:
         print( f'{WARNING_LINE} {exception}, finished with warnings...' )
+        print( f'##vso[task.logissue type=warning;]{exception}' )
         sys.exit( exception.ERROR_CODE )
     except MergerException as exception:
         print( f'{FATAL_LINE} {exception}, exiting...' )
+        print( f'##vso[task.logissue type=error;]{exception}' )
         sys.exit( exception.ERROR_CODE )
 
 

@@ -9,7 +9,7 @@ from modules.git import checkout, fetch, prepare_and_merge
 from modules.parser.parse_file import parseFile
 from modules.utils import INFO_TAG, call_subprocess, getXmlNamesFromJSON, IDENTATION, PARSEABLE_METADATA
 from modules.utils.exceptions import NoDifferencesException
-from modules.utils.utilities import generateDestructive
+from modules.utils.utilities import generateDestructive, xmlEncodeText
 
 def mergeDelta( source, target, remote, doFetch, reset, deltaFolder, sourceFolder, apiVersion, describePath='describe.log'):
     ''' Builds delta package in the destination folder '''
@@ -275,7 +275,7 @@ def generateMergedFile(rootTag, folder, apiname, deltaFolder, mapResult):
     mergedFile += f'<{rootTag} xmlns="http://soap.sforce.com/2006/04/metadata">\n'
     for tagName in mapResult:
         if isinstance( mapResult[ tagName ], str ):
-            mergedFile += f'{IDENTATION}<{tagName}>{mapResult[ tagName ]}</{tagName}>\n'
+            mergedFile += f'{IDENTATION}<{tagName}>{xmlEncodeText(mapResult[ tagName ])}</{tagName}>\n'
         else:
             for fullNameElement in mapResult[ tagName ]:
                 mergedFile += f'{IDENTATION}<{tagName}>\n'
@@ -294,12 +294,18 @@ def iterateElement( elementValue, elementTag, identationLevel ):
 
     textValue = ''
     if type( elementValue ) is str:
-        textValue += f'{IDENTATION*identationLevel}<{elementTag}>{elementValue}</{elementTag}>\n'
+        textValue += f'{IDENTATION*identationLevel}<{elementTag}>{xmlEncodeText(elementValue)}</{elementTag}>\n'
     elif type( elementValue ) is dict:
         textValue += f'{IDENTATION*identationLevel}<{elementTag}>\n'
         for keyTag in sorted( elementValue.keys() ):
             textValue += iterateElement( elementValue[ keyTag ], keyTag, identationLevel + 1 )
         textValue += f'{IDENTATION*identationLevel}</{elementTag}>\n'
+    elif type( elementValue ) is list:
+        for elementListValue in elementValue:
+            textValue += f'{IDENTATION*identationLevel}<{elementTag}>\n'
+            for keyTag in sorted( elementListValue.keys() ):
+                textValue += iterateElement( elementListValue[ keyTag ], keyTag, identationLevel + 1 )
+            textValue += f'{IDENTATION*identationLevel}</{elementTag}>\n'
     else:
         textValue += f'{IDENTATION*identationLevel}<{elementTag}/>\n'
     return textValue
@@ -337,6 +343,13 @@ def copyFiles(srcFolder, folder, apiname, deltaFolder, hasMetaFile):
             copyFile( f'{srcFolder}/{folder}/{apiname}', f'{deltaFolder}/{folder}/{apiname}' )
             apiname = apiname.split( '.' )[ 0 ]
             copyFile( f'{srcFolder}/{folder}/{apiname}.site-meta.xml', f'{deltaFolder}/{folder}/{apiname}.site-meta.xml' )
+    elif folder == 'objectTranslations':
+        objectTranslationName = apiname.split('/')[0]
+        objectTranslationFile = f'{objectTranslationName}/{objectTranslationName}.objectTranslation-meta.xml'
+        copyTree(f'{srcFolder}/{folder}/{objectTranslationName}',f'{deltaFolder}/{folder}/{objectTranslationName}')
+        copyFile( f'{srcFolder}/{folder}/{apiname}', f'{deltaFolder}/{folder}/{apiname}' )
+        if not os.path.isfile( f'{deltaFolder}/{folder}/{objectTranslationFile}'):
+            copyFile( f'{srcFolder}/{folder}/{objectTranslationFile}', f'{deltaFolder}/{folder}/{objectTranslationFile}' )
     else:
         if '/' in apiname:
             subFolders      = apiname.split( '/' )
@@ -351,7 +364,8 @@ def copyFiles(srcFolder, folder, apiname, deltaFolder, hasMetaFile):
                 if 'document-meta.xml' in apiname:
                     rootFilename    = apiname[ : -len( 'document-meta.xml' ) ]
                     listFiles       = glob.glob( f'{srcFolder}/{folder}/{rootFilename}*' )
-                    relatedFile     = [ file for file in listFiles if 'document-meta.xml' not in file ][ 0 ].split( '/documents/' )[ 1 ]
+                    pathFile        = [ file for file in listFiles if 'document-meta.xml' not in file ][ 0 ].split( '/' )
+                    relatedFile     = pathFile[ len( pathFile ) - 1 ]
                 else:
                     relatedFile = apiname.split( '.' )[ 0 ]
                     relatedFile = f'{relatedFile}.document-meta.xml'
@@ -361,7 +375,9 @@ def copyFiles(srcFolder, folder, apiname, deltaFolder, hasMetaFile):
                     relatedFile = apiname[ : -len( '-meta.xml' ) ]
                 else:
                     relatedFile = f'{apiname}-meta.xml'
-                copyFile( f'{srcFolder}/{folder}/{relatedFile}', f'{deltaFolder}/{folder}/{relatedFile}' )
+                copyFile( f'{srcFolder}/{folder}/{apiname}', f'{deltaFolder}/{folder}/{apiname}' )
+                if os.path.isfile( f'{srcFolder}/{folder}/{relatedFile}' ):
+                    copyFile( f'{srcFolder}/{folder}/{relatedFile}', f'{deltaFolder}/{folder}/{relatedFile}' )
 
         copyFile( f'{srcFolder}/{folder}/{apiname}', f'{deltaFolder}/{folder}/{apiname}' )
 
