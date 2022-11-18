@@ -153,10 +153,11 @@ def handleDifferences(differences, projectNames, deltaFolder, apiVersion, xmlNam
 
     for status, filename in differences:
 
-        isMetadataFile = True
+        isMetadataFile = False
         for projectName in projectNames:
-            if projectName not in filename:
-                isMetadataFile = False
+            if projectName in filename:
+                isMetadataFile = True
+                break
         if not isMetadataFile:
             continue
 
