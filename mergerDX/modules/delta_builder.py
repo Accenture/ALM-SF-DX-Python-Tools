@@ -370,6 +370,7 @@ def copyFiles(srcFolder, folder, apiname, deltaFolder, hasMetaFile):
                 else:
                     relatedFile = apiname.split( '.' )[ 0 ]
                     relatedFile = f'{relatedFile}.document-meta.xml'
+                print( f'{INFO_TAG} copiando \'{srcFolder}/{folder}/{relatedFile}\' en \'{deltaFolder}/{folder}/{relatedFile}\'' )
                 copyFile( f'{srcFolder}/{folder}/{relatedFile}', f'{deltaFolder}/{folder}/{relatedFile}' )
             else:
                 if '-meta.xml' in apiname:
