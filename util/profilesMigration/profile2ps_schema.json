@@ -1,0 +1,86 @@
+{
+    "applicationVisibilities": {
+      "applicationVisibilities": [
+        "application",
+        "visible"
+      ]
+    },
+    "classAccesses": {
+      "classAccesses": [
+        "apexClass",
+        "enabled"
+      ]
+    },
+    "customMetadataTypeAccesses": {
+      "customMetadataTypeAccesses": [
+        "enabled",
+        "name"
+      ]
+    },
+    "customPermissions": {
+      "customPermissions": [
+        "enabled",
+        "name"
+      ]
+    },
+    "customSettingAccesses": {
+      "customSettingAccesses": [
+        "enabled",
+        "name"
+      ]
+    },
+    "externalDataSourceAccesses": {
+      "externalDataSourceAccesses": [
+        "enabled",
+        "externalDataSource"
+      ]
+    },
+    "fieldPermissions": {
+      "fieldPermissions": [
+        "editable",
+        "field",
+        "readable"
+      ]
+    },
+    "flowAccesses": {
+      "flowAccesses": [
+        "enabled",
+        "flow"
+      ]
+    },
+    "objectPermissions": {
+      "objectPermissions": [
+        "allowCreate",
+        "allowDelete",
+        "allowEdit",
+        "allowRead",
+        "modifyAllRecords",
+        "object",
+        "viewAllRecords"
+      ]
+    },
+    "pageAccesses": {
+      "pageAccesses": [
+        "apexPage",
+        "enabled"
+      ]
+    },
+    "recordTypeVisibilities": {
+      "recordTypeVisibilities": [
+        "recordType",
+        "visible"
+      ]
+    },
+    "tabVisibilities": {
+      "tabSettings": [
+        "tab",
+        "visibility"
+      ]
+    },
+    "userPermissions": {
+      "userPermissions": [
+        "enabled",
+        "name"
+      ]
+    }
+  }
