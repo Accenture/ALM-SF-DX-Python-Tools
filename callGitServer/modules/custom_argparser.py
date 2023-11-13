@@ -29,6 +29,10 @@ def parse_args():
     help_string = 'Accepts Merge Request, creates a Release Tag & Branch'
     release_parser(subparsers.add_parser('release', help=help_string))
 
+    # Approve Merge Request Subparser
+    help_string = 'Approve Merge Request'
+    approve_parser(subparsers.add_parser('approve', help= help_string))
+
     args = parser.parse_args()
 
     # Post Validations
@@ -100,15 +104,31 @@ def comment_parser(parser):
     parser.add_argument( '-t', '--token', required=True, help='Git API Token (required)' )
     parser.add_argument( '-ns', '--no-ssl', action='store_false', dest='ssl_verify', help='Flag to verify the SSL in requests' )
     parser.add_argument( '-fh', '--force-https', action='store_true', help='Flag to force https Git host' )
-    parser.add_argument( '-p', '--project', required=True, help='Project Id (Gitlab) or Project Name (Bitbucket/Azure DevOps) identifier' )
+    parser.add_argument( '-p', '--project', required=True, help='Project Id (Gitlab), Project Name (Bitbucket/Azure DevOps) identifier or Repository Name (AWS) Identifier' )
     parser.add_argument( '-o', '--owner', help='Owner (Bitbucket) identifier or Organization (Azure DevOps)' )
-    parser.add_argument( '-r', '--host', required=True, help='Repository host' )
+    parser.add_argument( '-r', '--region', help='Region (AWS) identifier' )
+    parser.add_argument( '--host', required=True, help='Repository host' )
+    parser.add_argument( '-bc', '--before-commit-id', required=False, help='Before Commit ID (only AWS)' )
+    parser.add_argument( '-ac', '--after-commit-id', required=False, help='After Commit ID (only AWS)' )
     parser.add_argument( '-bs', '--bitbucketServer', type=checkBoolean, default=False, help='Flag to use Bitbucket Server' )
     parser.add_argument( '-ri', '--repositoryId', help='Repository for Azure DevOps' )
     parser.add_argument( '-ti', '--threadId', help='Thread Id for Azure DevOps' )
     parser.add_argument( '-ts', '--threadStatus', help='Thread status for Azure DevOps' )
 
-
+def approve_parser(parser):
+    ''' Adds general credentials arguments to passed parser '''
+    parser.add_argument( '-b', '--build-id', default=os.environ.get( ENV_BUILD_ID ), help='Current build id' )
+    parser.add_argument( '-mr', '--merge-request-iid', required=True, help='Merge Request project identifier' )
+    parser.add_argument( '-w', '--workspace', default=os.environ.get( ENV_WORKSPACE ), help='Workspace Path' )
+    parser.add_argument( '-t', '--token', required=True, help='Git API Token (required)' )
+    parser.add_argument( '-ns', '--no-ssl', action='store_false', dest='ssl_verify', help='Flag to verify the SSL in requests' )
+    parser.add_argument( '-fh', '--force-https', action='store_true', help='Flag to force https Git host' )
+    parser.add_argument( '-p', '--project', required=True, help='Project Id (Gitlab) or Project Name (Bitbucket) identifier' )
+    parser.add_argument( '-o', '--owner', help='Owner (Bitbucket) identifier' )
+    parser.add_argument( '--host', required=True, help='Repository host' )
+    parser.add_argument( '-r', '--region', help='Region (AWS) identifier' )
+    parser.add_argument( '-bs', '--bitbucketServer', type=checkBoolean, default=False, help='Flag to use Bitbucket Server' )
+    parser.add_argument( '-us', '--userSlug', required = False, help='User slug of participant in the project')
 def status_parser(parser):
     ''' Adds validate notification arguments to passed parser '''
     parser.add_argument( '-t', '--token', required=True, help='Git API Token' )
@@ -122,7 +142,7 @@ def status_parser(parser):
     parser.add_argument( '-bid', '--build-id', default=os.environ.get( ENV_BUILD_ID ), help='Current build id' )
     parser.add_argument( '-p', '--project', required=True, help='Project Id (Gitlab) or Project Name (Bitbucket) identifier' )
     parser.add_argument( '-o', '--owner', help='Owner (Bitbucket) identifier' )
-    parser.add_argument( '-r', '--host', required=True, help='Repository host' )
+    parser.add_argument( '--host', required=True, help='Repository host' )
     parser.add_argument( '-bs', '--bitbucketServer', type=checkBoolean, default=False, help='Flag to use Bitbucket Server' )
 
 
@@ -140,7 +160,7 @@ def release_parser(parser):
     parser.add_argument( '-gt', '--git-terminal', action='store_true', help='Flag to run by Terminal Git' )
     parser.add_argument( '-p', '--project', required=True, help='Project Id (Gitlab) or Project Name (Bitbucket) identifier' )
     parser.add_argument( '-o', '--owner', help='Owner (Bitbucket) identifier' )
-    parser.add_argument( '-r', '--host', required=True, help='Repository host' )
+    parser.add_argument( '--host', required=True, help='Repository host' )
     parser.add_argument( '-bs', '--bitbucketServer', type=checkBoolean, default=False, help='Flag to use Bitbucket Server' )
 
 
