@@ -4,14 +4,16 @@ from models.gitlabHandler import GitlabHandler
 from models.bitbucketCloud import BitbucketCloud
 from models.bitbucketServer import BitbucketServer
 from models.azureDevOpsHandler import AzureDevOpsHandler
+from models.awsCloud import awsCloud
 from models.exceptions import DuplicateRemote
 from modules.utils import ( INFO_TAG, WARNING_TAG, print_key_value_list, call_subprocess )
 
 class GitServer():
 
 	def __init__(self, host, sslVerify, **kwargs):
-		self.host		= host
-		self.sslVerify	= sslVerify
+		self.host				= host
+		self.sslVerify			= sslVerify
+		self.isBitbucketServer 	= kwargs['isBitbucketServer']
 		self.__get_handler(host, **kwargs)
 
 
@@ -22,8 +24,11 @@ class GitServer():
 			self.gitHandler = GitlabHandler( host, kwargs[ 'projectId' ] )
 		elif 'dev.azure.com' in host:
 			self.gitHandler = AzureDevOpsHandler( host, kwargs[ 'owner' ], kwargs[ 'projectName' ], kwargs[ 'repositoryId' ] )
+		elif 'amazon' in host:
+			self.gitHandler = awsCloud(host, kwargs['region'], kwargs['projectId'])
 		else:
 			if kwargs[ 'isBitbucketServer' ]:
+				self.isBitbucketServer = True
 				self.gitHandler = BitbucketServer( host, kwargs[ 'owner' ], kwargs[ 'projectName' ] )
 			else:
 				raise Exception( 'Not implemented' )
@@ -50,7 +55,11 @@ class GitServer():
 	def add_comment(self, token, mergeRequestId, newComments, buildId, workspace, **kwargs):
 		self.gitHandler.add_comment( self.sslVerify, token, mergeRequestId, newComments, buildId, workspace, **kwargs )
 
-
+	def approve_pull_request(self, token, mergeRequestId, userSlug, **kwargs):
+		if self.isBitbucketServer == True or "amazon" in self.host:
+			self.gitHandler.approve_pull_request(self.sslVerify, token, mergeRequestId, userSlug, **kwargs)
+		else:
+			raise Exception('Not Implemented') #METHOD NOT ALLOWED FOR GITLAB HOST
 	def edit_comment(self, token, mergeRequestId, newComments, buildId, workspace, **kwargs):
 		self.gitHandler.edit_comment( self.sslVerify, token, mergeRequestId, newComments, buildId, workspace, **kwargs )
 

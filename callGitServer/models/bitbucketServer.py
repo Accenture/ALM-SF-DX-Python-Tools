@@ -79,6 +79,22 @@ class BitbucketServer():
 		else:
 			print( f'{ERROR_LINE} Could not update commit status' )
 
+	def approve_pull_request(self, sslVerify, token, pullRequestId, userSlug, **kwargs):
+		url = (f'{self.host}/rest/api/1.0/projects/{self.project}/repos/{self.repository}/pull-requests/{pullRequestId}/participants/{userSlug}')
+		headers		= { 'Authorization' : f'Bearer {token}', 'Content-Type' : 'application/json' }
+		payload		= { 'approved' : True, 'status': 'APPROVED' }
+		data = json.dumps(payload).encode('utf-8')
+		print_key_value_list( f'{INFO_TAG} Approving pull request to:', [
+			( 'Host URL', self.host ), ( 'Project Name', self.project ), ( 'Repository', self.repository ), 
+			( 'Target Endpoint', url), ( 'UserSlug', userSlug ), ( 'PullRequest Id', pullRequestId )
+		] )
+
+		response = http_request( url, data, headers, 'PUT', sslVerify )
+		if response.statusCode == 200 or response.statusCode == 201:
+			print( f'{SUCCESS_LINE} Pull request approved successfully id {pullRequestId}')
+		else:
+			print( f'{ERROR_LINE} Could not approve pull request ({response.responseBody} -- {response.statusCode})' )
+			
 	def add_comment(self, sslVerify, token, pullRequestId, newComments, buildId, workspace, **kwargs):
 		''' Adds a new comment to the pull request '''
 
