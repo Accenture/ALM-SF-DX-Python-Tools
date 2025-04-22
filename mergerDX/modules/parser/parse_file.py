@@ -7,14 +7,17 @@ from modules.utils.exceptions import DuplicatedTags
 
 def parseFile(filename, reference):
 
-	fileString	= get_file( filename, reference )
+	# fileString	= get_file( filename, reference )
+	with open(filename, 'r',  encoding='utf-8') as file:
+		print(filename)
+		fileString = file.read().rstrip()
 	xmlData		= elTree.fromstring( fileString )
 	rootTag		= xmlData.tag.split( XMLNS )[ 1 ]
 
 	setDuplicatedFullNames = set()
 	mapComponents = {}
 
-	for childElement in xmlData.getchildren():
+	for childElement in list(xmlData):
 		tagName = childElement.tag.split( XMLNS )[ 1 ]
 		if childElement:
 			addValueToMap( tagName, childElement, mapComponents, setDuplicatedFullNames )
@@ -40,7 +43,7 @@ def addValueToMap(tagName, childElement, mapComponents, setDuplicatedFullNames, 
 
 def getChildData(xmlElement):
 	mapData = {}
-	for childElement in xmlElement.getchildren():
+	for childElement in list(xmlElement):
 		tagName = childElement.tag.split( XMLNS )[ 1 ]
 		if childElement:
 			if not tagName in mapData:
@@ -59,7 +62,7 @@ def getChildData(xmlElement):
 def mergeFileToCommit(filePath, mapComponents, mapAttributes):
 	xmlData = elTree.parse( filePath ).getroot()
 	fileTag = xmlData.tag.split( XMLNS )[ 1 ]
-	for childElement in xmlData.getchildren():
+	for childElement in list(xmlData):
 		tagName = childElement.tag.split( XMLNS )[ 1 ]
 		if childElement:
 			checkElement( tagName, childElement, mapComponents )
