@@ -26,7 +26,8 @@ MAP_FULLNAME = {
     'sharingRecalculations'         : 'className',
     'tabVisibilities'               : 'tab',
     'userPermissions'               : 'name',
-    'picklistValues'                : 'picklist'
+    'picklistValues'                : 'picklist',
+    'externalCredentialPrincipalAccesses' : 'externalCredentialPrincipal'
 }
 
 def checkFolder( folderPath ):

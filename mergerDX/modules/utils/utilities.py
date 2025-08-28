@@ -25,7 +25,8 @@ MAP_FULLNAME = {
     'recordTypeVisibilities'        : 'recordType',
     'sharingRecalculations'         : 'className',
     'tabVisibilities'               : 'tab',
-    'userPermissions'               : 'name'
+    'userPermissions'               : 'name',
+    'externalCredentialPrincipalAccesses' : 'externalCredentialPrincipal'
 }
 
 def checkFolder( folderPath ):
