@@ -9,7 +9,7 @@ def parseFile( filePath ):
 	mapComponents	= {}
 	mapAttributes	= {}
 
-	for childElement in xmlData.getchildren():
+	for childElement in list(xmlData):
 		tagName = childElement.tag.split( XMLNS )[ 1 ]
 		if childElement and tagName in STANDARD_ATTRIBUTES:
 			addValueToMap( tagName, childElement, mapComponents, fullName=tagName )
@@ -29,7 +29,7 @@ def addValueToMap( tagName, childElement, mapComponents, fullName=None ):
 def mergeFileToCommit( filePath, mapComponents, mapAttributes ):
 	xmlData = elTree.parse( filePath ).getroot()
 	fileTag = xmlData.tag.split( XMLNS )[ 1 ]
-	for childElement in xmlData.getchildren():
+	for childElement in list(xmlData):
 		tagName = childElement.tag.split( XMLNS )[ 1 ]
 		if tagName in STANDARD_ATTRIBUTES:
 			checkElement( tagName, childElement, mapComponents, fullName=tagName )

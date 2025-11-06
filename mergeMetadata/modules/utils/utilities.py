@@ -26,7 +26,8 @@ MAP_FULLNAME = {
     'sharingRecalculations'         : 'className',
     'tabVisibilities'               : 'tab',
     'userPermissions'               : 'name',
-    'picklistValues'                : 'picklist'
+    'picklistValues'                : 'picklist',
+    'externalCredentialPrincipalAccesses' : 'externalCredentialPrincipal'
 }
 
 def checkFolder( folderPath ):
@@ -44,7 +45,7 @@ def getFullName( tagName, childElement ):
 
 def searchFullNameTag( fullNameTag, childElement ):
     fullName = ''
-    for subChildElement in childElement.getchildren():
+    for subChildElement in list(childElement):
         tagName = subChildElement.tag.split( XMLNS )[ 1 ]
         if fullNameTag == tagName:
             fullName = subChildElement.text
@@ -59,7 +60,7 @@ def getComposedName( tagName, childElement ):
     mainName    = ''
     secondName  = ''
 
-    for subChildElement in childElement.getchildren():
+    for subChildElement in list(childElement):
         tagName = subChildElement.tag.split( XMLNS )[ 1 ]
         if mainId == tagName:
             mainName = subChildElement.text

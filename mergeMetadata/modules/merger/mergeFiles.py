@@ -89,8 +89,8 @@ def getValueFromComponent(componentType, mapComponents):
 	for fullName in listComponents:
 		xmlElement		= mapComponents[ componentType ][ fullName ]
 		componentValue	= ''
-		if xmlElement.getchildren():
-			for childElement in xmlElement.getchildren():
+		if list(xmlElement):
+			for childElement in list(xmlElement):
 				tagName = childElement.tag.split( XMLNS )[ 1 ]
 				if childElement:
 					childValue = iterateChildsToPrint( childElement, 3 )
@@ -105,7 +105,7 @@ def getValueFromComponent(componentType, mapComponents):
 
 def iterateChildsToPrint(childElement, identationMultiplier):
 	printValue = ''
-	for subChildElement in childElement.getchildren():
+	for subChildElement in list(childElement):
 		tagName = subChildElement.tag.split( XMLNS )[ 1 ]
 		if subChildElement:
 			childValue = iterateChildsToPrint( subChildElement, identationMultiplier+1 )

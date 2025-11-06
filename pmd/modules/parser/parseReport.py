@@ -52,7 +52,7 @@ def countIssues( mapIssuesByLevel, level ):
 
 def extractAlertData( alertRow, srcPath, mapSections, mapSubSections ):
 
-	alertData	= alertRow.getchildren()
+	alertData	= list(alertRow)
 	filePath	= alertData[ 1 ].text.split( srcPath )[ 1 ]
 	fileFolder	= filePath.split( '/' )[ 0 ]
 	fileName	= filePath.split( '/' )[ 1 ].split( '.' )[ 0 ]
@@ -60,7 +60,7 @@ def extractAlertData( alertRow, srcPath, mapSections, mapSubSections ):
 	alertMsg	= alertData[ 3 ]
 
 	if len( alertMsg ):
-		alertMsg = alertMsg.getchildren()[ 0 ].text
+		alertMsg = list(alertMsg)[ 0 ].text
 	else:
 		alertMsg = alertMsg.text
 
