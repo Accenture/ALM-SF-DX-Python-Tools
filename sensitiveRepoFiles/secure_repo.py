@@ -18,7 +18,7 @@ def call_subprocess(command):
 def get_main_branches():
     main_branches           = ['origin/release', 'origin/master', 'origin/main', 'origin/develop']
     existing_branches       = subprocess.check_output(['git', 'branch', '-r']).decode('utf-8').split('\n')
-    existing_branches       = [branch.strip() for branch in existing_branches]  # Eliminar espacios en blanco
+    existing_branches       = [branch.strip() for branch in existing_branches]
     existing_main_branches  = [branch for branch in main_branches if branch in existing_branches]
     return existing_main_branches
 
