@@ -19,20 +19,19 @@
             box-sizing: border-box;
             padding: 1rem;
             margin: 2rem;
-            backdrop-filter: blur(10px); /* Añade un efecto de desenfoque al fondo */
-            background-color: rgba(255, 255, 255, 0.7); /* Asegúrate de que el fondo es semi-transparente */
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Añade una sombra para dar la sensación de que está por encima del fondo */
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         }
         .logo{
             width:200px;
             display:block;
             margin:0 auto 30px auto
         }
-        /* Aquí es donde agregamos el efecto de Bokeh para la cabecera */
         .header {
             position: relative;
             overflow: hidden;
-            padding: 0; /* Quitamos el padding para hacer la cabecera más pequeña */
+            padding: 0;
             text-align: center;
             z-index: 1;
         }
@@ -278,28 +277,26 @@
             backdrop-filter: blur(10px);
             background-color: rgba(255, 255, 255, 0.3);
             border: none;
-            color: black; /* Cambia el color del texto a negro */
-            padding: 8px 20px; /* Aumenta el padding para dar más espacio alrededor del texto */
+            color: black;
+            padding: 8px 20px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
-            font-size: 20px; /* Aumenta el tamaño de la fuente */
+            font-size: 20px;
             margin: 4px 2px;
             cursor: pointer;
-            border-radius: 12px; /* Añade esquinas redondeadas */
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); /* Añade sombra */
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
         .frozen-glass-btn:hover {
-            background-color: rgba(255, 255, 255, 0.999); /* Cambia el color de fondo al pasar el cursor */
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Añade una sombra suave */
+            background-color: rgba(255, 255, 255, 0.999);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
 <body>
-    <!-- Aquí es donde separamos la cabecera del resto del contenido -->
     <div class="header" id="header">
-        <!-- Aquí es donde agregamos el div con la clase "background" -->
         <div class="background">
             <div style="z-index: 1; position: relative;">
                 <img src="https://1000logos.net/wp-content/uploads/2021/04/Accenture-logo-2048x1152.png" alt="Accenture Logo" class="logo">
@@ -325,16 +322,16 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Commit</th>
-                                    <th scope="col">Branches</th> <!-- Añade una nueva cabecera de columna para las ramas -->
+                                    <th scope="col">Branches</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for branch, commits in info.items() %} <!-- Itera sobre cada rama y su lista de commits -->
-                                    {% for commit in commits %} <!-- Itera sobre cada commit en la lista de commits de la rama actual -->
+                                {% for branch, commits in info.items() %}
+                                    {% for commit in commits %}
                                         <tr>
                                             <th scope="row">{{ loop.index }}</th>
-                                            <td>{{ commit }}</td> <!-- Añade el commit a la columna de commits -->
-                                            <td>{{ branch }}</td> <!-- Añade la rama a la nueva columna de ramas -->
+                                            <td>{{ commit }}</td>
+                                            <td>{{ branch }}</td>
                                         </tr>
                                     {% endfor %}
                                 {% endfor %}
@@ -351,12 +348,10 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script>
-       // Cuando se hace clic en una tarjeta para abrirla
         $(".collapse").on('show.bs.collapse', function() {
             $(this).parent().find(".fas").removeClass("fa-chevron-down").addClass("fa-chevron-up");
         });
 
-        // Cuando se hace clic en una tarjeta para cerrarla, o cuando se cierra automáticamente al abrir otra tarjeta
         $(".collapse").on('hide.bs.collapse', function() {
             $(this).parent().find(".fas").removeClass("fa-chevron-up").addClass("fa-chevron-down");
         });
