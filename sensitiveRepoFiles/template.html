@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados de la búsqueda de archivos sensibles</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body{
+            font-family:Arial,sans-serif;
+            color:#fff;
+        }
+        .container{
+            margin-top:10px
+        }
+        .card-body{
+            background-color:#fff;
+            color:#000;
+            box-sizing: border-box;
+            padding: 1rem;
+            margin: 2rem;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+        .logo{
+            width:200px;
+            display:block;
+            margin:0 auto 30px auto
+        }
+        .header {
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+            text-align: center;
+            z-index: 1;
+        }
+        .header:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #6200ee;
+            z-index: -1;
+        }
+        .background {
+            width: 100%;
+            height: 39vh;
+            background: #3E1E68;
+        }
+        .background span {
+            width: 20vmin;
+            height: 20vmin;
+            border-radius: 20vmin;
+            backface-visibility: hidden;
+            position: absolute;
+            animation-name: move;
+            animation-duration: 9s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+        .background span:nth-child(2) {
+            color: #583C87;
+            top: 46%;
+            left: 92%;
+            animation-duration: 18.7s;
+            animation-delay: -18s;
+            transform-origin: -12vw 9vh;
+            box-shadow: -40vmin 0 12.4840244467vmin currentColor;
+        }
+        .background span:nth-child(3) {
+            color: #583C87;
+            top: 29%;
+            left: 9%;
+            animation-duration: 16.4s;
+            animation-delay: -6.7s;
+            transform-origin: -24vw 22vh;
+            box-shadow: 40vmin 0 5.6340068496vmin currentColor;
+        }
+        .background span:nth-child(4) {
+            color: #FFACAC;
+            top: 94%;
+            left: 98%;
+            animation-duration: 12.5s;
+            animation-delay: -17.2s;
+            transform-origin: -22vw 0vh;
+            box-shadow: -40vmin 0 12.8551435041vmin currentColor;
+        }
+        .background span:nth-child(5) {
+            color: #FFACAC;
+            top: 57%;
+            left: 12%;
+            animation-duration: 15.6s;
+            animation-delay: -8s;
+            transform-origin: -22vw 7vh;
+            box-shadow: 40vmin 0 10.6181476331vmin currentColor;
+        }
+        .background span:nth-child(6) {
+            color: #E45A84;
+            top: 36%;
+            left: 20%;
+            animation-duration: 17.5s;
+            animation-delay: -12.6s;
+            transform-origin: 17vw -24vh;
+            box-shadow: 40vmin 0 8.6260422265vmin currentColor;
+        }
+        .background span:nth-child(7) {
+            color: #E45A84;
+            top: 26%;
+            left: 17%;
+            animation-duration: 14.8s;
+            animation-delay: -0.5s;
+            transform-origin: -11vw -9vh;
+            box-shadow: -40vmin 0 12.050101445vmin currentColor;
+        }
+        .background span:nth-child(8) {
+            color: #E45A84;
+            top: 56%;
+            left: 19%;
+            animation-duration: 12.4s;
+            animation-delay: -14.8s;
+            transform-origin: -17vw -5vh;
+            box-shadow: 40vmin 0 5.2144076872vmin currentColor;
+        }
+        .background span:nth-child(9) {
+            color: #583C87;
+            top: 12%;
+            left: 22%;
+            animation-duration: 16.2s;
+            animation-delay: -7.5s;
+            transform-origin: -4vw -7vh;
+            box-shadow: -40vmin 0 12.8260124812vmin currentColor;
+        }
+        .background span:nth-child(10) {
+            color: #583C87;
+            top: 37%;
+            left: 77%;
+            animation-duration: 13.3s;
+            animation-delay: -12s;
+            transform-origin: 25vw 24vh;
+            box-shadow: 40vmin 0 12.5415755197vmin currentColor;
+        }
+        .background span:nth-child(11) {
+            color: #FFACAC;
+            top: 89%;
+            left: 14%;
+            animation-duration: 18.4s;
+            animation-delay: -0.4s;
+            transform-origin: 14vw 1vh;
+            box-shadow: 40vmin 0 14.6590604477vmin currentColor;
+        }
+        .background span:nth-child(12) {
+            color: #583C87;
+            top: 61%;
+            left: 84%;
+            animation-duration: 13.5s;
+            animation-delay: -10.5s;
+            transform-origin: -4vw 24vh;
+            box-shadow: -40vmin 0 8.171082235vmin currentColor;
+        }
+        .background span:nth-child(13) {
+            color: #E45A84;
+            top: 64%;
+            left: 63%;
+            animation-duration: 10.9s;
+            animation-delay: -18.5s;
+            transform-origin: 3vw 20vh;
+            box-shadow: 40vmin 0 6.8376553281vmin currentColor;
+        }
+        .background span:nth-child(14) {
+            color: #E45A84;
+            top: 86%;
+            left: 17%;
+            animation-duration: 13.1s;
+            animation-delay: -6.7s;
+            transform-origin: 10vw -21vh;
+            box-shadow: -40vmin 0 13.9900893386vmin currentColor;
+        }
+        .background span:nth-child(15) {
+            color: #FFACAC;
+            top: 65%;
+            left: 83%;
+            animation-duration: 15.6s;
+            animation-delay: -11.4s;
+            transform-origin: 12vw -6vh;
+            box-shadow: -40vmin 0 10.3636410621vmin currentColor;
+        }
+        .background span:nth-child(16) {
+            color: #E45A84;
+            top: 22%;
+            left: 98%;
+            animation-duration: 15.8s;
+            animation-delay: -11.9s;
+            transform-origin: -22vw 16vh;
+            box-shadow: -40vmin 0 7.9491967658vmin currentColor;
+        }
+        .background span:nth-child(17) {
+            color: #E45A84;
+            top: 69%;
+            left: 76%;
+            animation-duration: 14.2s;
+            animation-delay: -7.9s;
+            transform-origin: -16vw 15vh;
+            box-shadow: 40vmin 0 13.0234530388vmin currentColor;
+        }
+        .background span:nth-child(18) {
+            color: #583C87;
+            top: 51%;
+            left: 54%;
+            animation-duration: 17.2s;
+            animation-delay: -15.7s;
+            transform-origin: 16vw -2vh;
+            box-shadow: 40vmin 0 12.0548269311vmin currentColor;
+        }
+        .background span:nth-child(19) {
+            color: #E45A84;
+            top: 91%;
+            left: 7%;
+            animation-duration: 16.2s;
+            animation-delay: -3.2s;
+            transform-origin: -8vw -7vh;
+            box-shadow: 40vmin 0 14.0905885737vmin currentColor;
+        }
+        .background span:nth-child(20) {
+            color: #583C87;
+            top: 52%;
+            left: 53%;
+            animation-duration: 14.3s;
+            animation-delay: -10.4s;
+            transform-origin: -11vw 19vh;
+            box-shadow: -40vmin 0 7.8035971221vmin currentColor;
+        }
+        @keyframes move {
+            100% {
+                transform: translate3d(0, 0, 1px) rotate(360deg);
+            }
+        }
+        .effect-holder {
+            height: auto;
+            border-radius: 16px;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            cursor:pointer;
+        }
+        .dropdown-style {
+            justify-content: space-between;
+            margin: 0 1rem 0 0;
+            background-color: #ffffff7d;   
+            margin: 2rem;
+            border-radius: 12px;
+            padding: 1rem;
+            position: relative;
+            box-shadow: 0 10px 15px rgb(0 0 0 / 20%);
+            box-sizing: border-box;
+            width: calc(100% - 4rem);
+            color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(33px);
+            background-blend-mode: overlay;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-style span {
+            font-size: 1em; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+        }
+        
+        #searchInput {
+            width: calc(100% - 4rem);
+            padding: 0 2rem;
+            margin: 0 2rem;
+        }        
+        .frozen-glass-btn {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: black;
+            padding: 8px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .frozen-glass-btn:hover {
+            background-color: rgba(255, 255, 255, 0.999);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="header" id="header">
+        <div class="background">
+            <div style="z-index: 1; position: relative;">
+                <img src="https://1000logos.net/wp-content/uploads/2021/04/Accenture-logo-2048x1152.png" alt="Accenture Logo" class="logo">
+                <h1>Sensitive File Analysis</h1>
+                <button id="exportBtn" class="frozen-glass-btn">Export to CSV</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <input class="form-control mb-4" id="searchInput" type="text" placeholder="Search by filename...">
+        <div id="accordion">
+            {% for file, info in results.items() %}
+            <div class="effect-holder dark">
+                <div class="dropdown-style black" id="heading{{ loop.index }}" data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">
+                    <span class="mb-0">{{ file }}</span>
+                    <i class="fas fa-chevron-down" style="float: right;"></i>
+                </div>
+                <div id="collapse{{ loop.index }}" class="collapse" aria-labelledby="heading{{ loop.index }}" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>Commits:</strong></p>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Commit</th>
+                                    <th scope="col">Branches</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for branch, commits in info.items() %}
+                                    {% for commit in commits %}
+                                        <tr>
+                                            <th scope="row">{{ loop.index }}</th>
+                                            <td>{{ commit }}</td>
+                                            <td>{{ branch }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endfor %}
+                            </tbody>
+                        </table>                        
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        $(".collapse").on('show.bs.collapse', function() {
+            $(this).parent().find(".fas").removeClass("fa-chevron-down").addClass("fa-chevron-up");
+        });
+
+        $(".collapse").on('hide.bs.collapse', function() {
+            $(this).parent().find(".fas").removeClass("fa-chevron-up").addClass("fa-chevron-down");
+        });
+
+        document.getElementById('exportBtn').addEventListener('click', function() {
+            var data = {{ results|tojson }};
+            var csvContent = "File,Branch,Commit\n"; 
+        
+            Object.keys(data).forEach(function(file) {
+                Object.keys(data[file]).forEach(function(branch) {
+                    data[file][branch].forEach(function(commit) {
+                        csvContent += file + "," + branch + "," + commit + "\n";
+                    });
+                });
+            });
+        
+            var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            var link = document.createElement("a");
+            var url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", "export.csv");
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
+
+        $(document).ready(function(){
+            $("#searchInput").on("keyup",function(){
+                var t=$(this).val().toLowerCase();
+                $("#accordion .effect-holder").filter(function(){
+                    $(this).toggle(-1<$(this).text().toLowerCase().indexOf(t))
+                })
+            })
+            var backgroundDiv = document.querySelector('.background');
+            for (var i = 0; i < 100; i++) {
+                var span = document.createElement('span');
+                backgroundDiv.appendChild(span);
+            }
+        })
+    </script>
+</body>
+</html>
