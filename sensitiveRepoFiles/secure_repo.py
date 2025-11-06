@@ -28,7 +28,7 @@ def get_all_branches():
     return cleaned_branches
 
 def search_sensitive_files(repo_path, main_only):
-    sensitive_extensions = ['.key', '.crt', '.pem', '.p12', '.pfx', '.cer', '.der', '.jks', '.keystore', '.ovpn', '.aes', '.asc', '.ovpn', '.p7b', '.p7c', '.p8', '.pkcs12', '.pse', '.sst', '.stl', '.p12', '.pfx', '.p7b', '.spc', '.p7r', '.p7c', '.der', '.cer', '.crt', '.pem', '.env', '.ini', '.yaml', '.yml', '.toml', '.cfg', '.conf', '.config', '.properties', '.prop', '.props', '.cnf', '.rc', '.inf', '.info', '.plist']
+    sensitive_extensions = ['.key', '.crt', '.pem', '.p12', '.pfx', '.cer', '.der', '.jks', '.keystore', '.ovpn', '.aes', '.asc', '.ovpn', '.p7b', '.p7c', '.p8', '.pkcs12', '.pse', '.sst', '.stl', '.p12', '.pfx', '.p7b', '.spc', '.p7r', '.p7c', '.der', '.cer', '.crt', '.pem', '.env', '.ini', '.toml', '.cfg', '.conf', '.config', '.properties', '.prop', '.props', '.cnf', '.rc', '.inf', '.info', '.plist']
 
     if not os.path.exists(repo_path):
         logging.error(f"La ruta al repositorio {repo_path} no existe.")
