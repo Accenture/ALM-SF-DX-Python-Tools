@@ -16,10 +16,10 @@ def call_subprocess(command):
         return []
 
 def get_main_branches():
-    main_branches = ['origin/release', 'origin/master', 'origin/main', 'origin/develop']
-    existing_branches = subprocess.check_output(['git', 'branch', '-r']).decode('utf-8').split('\n')
-    existing_branches = [branch.strip() for branch in existing_branches]  # Eliminar espacios en blanco
-    existing_main_branches = [branch for branch in main_branches if branch in existing_branches]
+    main_branches           = ['origin/release', 'origin/master', 'origin/main', 'origin/develop']
+    existing_branches       = subprocess.check_output(['git', 'branch', '-r']).decode('utf-8').split('\n')
+    existing_branches       = [branch.strip() for branch in existing_branches]  # Eliminar espacios en blanco
+    existing_main_branches  = [branch for branch in main_branches if branch in existing_branches]
     return existing_main_branches
 
 def get_all_branches():
@@ -61,16 +61,20 @@ def main():
     parser.add_argument('--main_only', action='store_true', help='Solo busca en las ramas principales (release, master, main, develop).')
     args = parser.parse_args()
 
-    template_dir = '' #Path To Template Dir
-    if not os.path.exists(template_dir):
-        logging.error(f"La ruta a la plantilla {template_dir} no existe.")
+    script_dir      = os.path.dirname(os.path.abspath(__file__))
+    template_dir    = script_dir
+    template_name   = 'template.html'
+    template_path   = os.path.join(template_dir, template_name)
+
+    if not os.path.exists(template_path):
+        logging.error(f"La plantilla {template_path} no existe.")
         return
 
     results = search_sensitive_files(args.repo_path, args.main_only)
 
     if results:
         env = Environment(loader=FileSystemLoader(template_dir))
-        template = env.get_template('template.html')
+        template = env.get_template(template_name)
         html = template.render(results=results)
 
         with open('results.html', 'w') as f:
