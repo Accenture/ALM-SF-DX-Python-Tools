@@ -40,7 +40,7 @@ def search_sensitive_files(repo_path, main_only):
 
     for branch in branches:
         call_subprocess(['git', 'checkout', branch])
-        # call_subprocess(['git', 'pull', 'origin', branch.split('/')[-1]])
+
         for root, dirs, files in os.walk(repo_path):
             for file in files:
                 if any(file.endswith(ext) for ext in sensitive_extensions):
